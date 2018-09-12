@@ -1,3 +1,7 @@
+//
+// Created by DongHoon Kim on 04/09/2018.
+//
+
 /*
 Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 This file is licensed under the Apache License, Version 2.0 (the "License").
@@ -40,39 +44,26 @@ int main(int argc, char** argv)
         "Example:\n"
         "    put_item Cellists Pau Language=ca Born=1876\n";
 
-    if (argc < 2)
-    {
-        std::cout << USAGE;
-        return 1;
-    }
-
     Aws::SDKOptions options;
 
     Aws::InitAPI(options);
     {
-        const Aws::String Path_Found_1414(argv[1]);
-        const Aws::String Root_Sort(argv[2]);
-        const Aws::String Certain_Root(argv[3]);
-        const Aws::String Calculated_Path(argv[4]);
-
         Aws::Client::ClientConfiguration clientConfig;
+        clientConfig.region = "ap-northeast-2";
         Aws::DynamoDB::DynamoDBClient dynamoClient(clientConfig);
 
         Aws::DynamoDB::Model::PutItemRequest pir;
-        pir.SetTableName(Path_Found_1414);
-
-        Aws::DynamoDB::Model::AttributeValue RS;
-        RS.SetS(Root_Sort);
-        pir.AddItem("2", RS);
+        pir.SetTableName("Path_Found_1414");
 
         Aws::DynamoDB::Model::AttributeValue CR;
-        CR.SetS(Root_Sort);
-        pir.AddItem("10199, 20299", CR);
+        CR.SetS("10199, 20299, 30399");
+        pir.AddItem("Certain_Root", CR);
 
         Aws::DynamoDB::Model::AttributeValue CP;
-        CP.SetS(Root_Sort);
-        pir.AddItem("101, 202", CP);
+        CP.SetS("101 202");
+        pir.AddItem("Calculated_Path",CP);
 
+        /*
         for (int x = 3; x < argc; x++)
         {
             const Aws::String arg(argv[x]);
@@ -89,6 +80,7 @@ int main(int argc, char** argv)
                 return 1;
             }
         }
+        */
 
         const Aws::DynamoDB::Model::PutItemOutcome result = dynamoClient.PutItem(pir);
         if (!result.IsSuccess())
