@@ -35,7 +35,7 @@ int main(){
 
         accepted_socket=accept(sockfd,(struct sockaddr*)&cliaddr,(socklen_t*)sizeof(cliaddr));
 
-        if(accepted_socket<0){
+        if(accepted_socket==-1){
             std::cout<<"Accept Failed"<<std::endl;
             return -1;
         }
