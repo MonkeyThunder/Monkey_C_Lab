@@ -28,14 +28,14 @@ int main(){
         return -1;
     }
 
-    listen(sockfd,2);
+    listen(sockfd,3);
 
     while(true){
         std::cout<<"Waiting...."<<std::endl;
 
         accepted_socket=accept(sockfd,(struct sockaddr*)&cliaddr,(socklen_t*)sizeof(cliaddr));
 
-        if(accepted_socket==-1){
+        if(accepted_socket < 0){
             std::cout<<"Accept Failed"<<std::endl;
             return -1;
         }
