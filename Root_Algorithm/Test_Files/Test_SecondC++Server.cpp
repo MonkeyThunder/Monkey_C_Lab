@@ -12,7 +12,6 @@ int   main( void)
 {
     int   server_socket;
     int   client_socket;
-    int   client_addr_size;
 
     struct sockaddr_in   server_addr;
     struct sockaddr_in   client_addr;
@@ -48,8 +47,7 @@ int   main( void)
 
     while( 1)
     {
-        client_addr_size  = sizeof( client_addr);
-        client_socket     = accept( server_socket, (struct sockaddr*)&client_addr, &client_addr_size);
+        client_socket     = accept( server_socket, (struct sockaddr*)&client_addr, (socklen_t*)sizeof(client_addr));
 
         if ( -1 == client_socket)
         {
