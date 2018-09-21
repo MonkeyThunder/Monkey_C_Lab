@@ -10,7 +10,6 @@ int main(){
     int sockfd;
     int bindfd;
     int accepted_socket;
-    int client_addr_size;
 
     sockfd=socket(PF_INET,SOCK_STREAM,0);
 
@@ -35,9 +34,7 @@ int main(){
     while(true){
         std::cout<<"Waiting...."<<std::endl;
 
-
-        client_addr_size=sizeof(cliaddr);
-        accepted_socket=accept(sockfd,(struct sockaddr*)&cliaddr,&client_addr_size);
+        accepted_socket=accept(sockfd,(struct sockaddr*)&cliaddr, (socklen_t*)sizeof(cliaddr));
 
         if(accepted_socket < 0){
             std::cout<<"Accept Failed"<<std::endl;
