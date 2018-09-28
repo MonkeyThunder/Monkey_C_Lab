@@ -34,7 +34,7 @@ int main(){
     while(true){
         std::cout<<"Waiting...."<<std::endl;
 
-        accepted_socket=accept(sockfd,(struct sockaddr*)&cliaddr, (socklen_t*)sizeof(cliaddr));
+        accepted_socket=accept(sockfd,(struct sockaddr*)&cliaddr, sizeof(cliaddr));
 
         if(accepted_socket < 0){
             std::cout<<"Accept Failed"<<std::endl;
