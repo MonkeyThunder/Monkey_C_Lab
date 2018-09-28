@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <sys/socket.h>
+#include <sys/stat.h>
 
 int main(){
 
@@ -10,7 +12,7 @@ int main(){
     int sockfd;
     int bindfd;
     int accepted_socket;
-    int accepted_cliaddr;
+    int Sizeof_cliaddr;
 
     sockfd=socket(PF_INET,SOCK_STREAM,0);
 
@@ -33,10 +35,10 @@ int main(){
     listen(sockfd,3);
 
     while(true){
-        accepted_cliaddr=sizeof(cliaddr);
+        Sizeof_cliaddr= sizeof(cliaddr);
         std::cout<<"Waiting...."<<std::endl;
 
-        accepted_socket=accept(sockfd,(struct sockaddr*)&cliaddr, &accepted_cliaddr);
+        accepted_socket=accept(sockfd,(struct sockaddr*)&cliaddr, &Sizeof_cliaddr);
 
         if(accepted_socket < 0){
             std::cout<<"Accept Failed"<<std::endl;
