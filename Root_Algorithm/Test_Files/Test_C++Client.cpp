@@ -36,7 +36,7 @@ int main(){
     buff_out[strlen(buff_out)-1]='0';
     write(sock,buff_out,255);
 
-    if(strncmp(buff_out,"quit", 4)==0){
+    if(strcmp(buff_out,"quit")==0){
         close(sock);
         std::cout<<"Connection Finished"<<std::endl;
         exit(0);
@@ -44,7 +44,7 @@ int main(){
 
     while(true){
         read(sock,buff_in,255);
-        if(strncmp(buff_in,"end",3)==0){
+        if(strcmp(buff_in,"end")==0){
             break;
         }
         std::cout<<buff_in<<std::endl;
