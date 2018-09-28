@@ -29,27 +29,25 @@ int main(){
         return -1;
     }
 
-    puts("Connection Success !");
-
-    std::cout<<"Txt = ";
-    fgets(buff_out, 255, stdin);
-
-    buff_out[strlen(buff_out)-1]='0';
-    write(sock,buff_out,255);
-
-    if(strcmp(buff_out,"quit")==0){
-        close(sock);
-        std::cout<<"Connection Finished"<<std::endl;
-        exit(0);
-    }
-
     while(true){
-        read(sock,buff_in,255);
-        if(strcmp(buff_in,"end")==0){
-            break;
+        puts("Connection Success !");
+
+        std::cout<<"Txt = ";
+        fgets(buff_out, 255, stdin);
+
+        write(sock,buff_out,255);
+
+        if(strcmp(buff_out,"quit")==0){
+            close(sock);
+            std::cout<<"Connection Finished"<<std::endl;
+            exit(0);
         }
+
+
         std::cout<<buff_in<<std::endl;
+
     }
+
 
     close(sock);
 
