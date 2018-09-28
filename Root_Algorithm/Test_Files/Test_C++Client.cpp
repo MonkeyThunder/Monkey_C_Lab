@@ -43,7 +43,7 @@ int main(){
             exit(0);
         }
 
-
+        read(sock,buff_in,255);
         std::cout<<buff_in<<std::endl;
 
     }
