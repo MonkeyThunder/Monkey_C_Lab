@@ -55,7 +55,7 @@ int main(){
                 break;
             }
 
-            if(strcmp(buf,"quit")==0){
+            if(strncmp(buf,"quit",4)==0){
                 write(accepted_socket, "Quit Accepted", 14);
                 std::cout<<"Quit Accepted - Server"<<std::endl;
                 close(accepted_socket);
@@ -63,7 +63,7 @@ int main(){
             }
 
             write(accepted_socket,buf,255);
-            std::cout<<"Send end"<<std::endl;
+            std::cout<<"Send - "<<buf<<std::endl;
         }
     }
 

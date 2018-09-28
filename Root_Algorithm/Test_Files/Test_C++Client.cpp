@@ -28,16 +28,16 @@ int main(){
         perror("Connection failed !");
         return -1;
     }
-
+    puts("Connection Success !");
     while(true){
-        puts("Connection Success !");
+
 
         std::cout<<"Txt = ";
         fgets(buff_out, 255, stdin);
 
         write(sock,buff_out,255);
 
-        if(strcmp(buff_out,"quit")==0){
+        if(strncmp(buff_out,"quit",4)==0){
             close(sock);
             std::cout<<"Connection Finished"<<std::endl;
             exit(0);
@@ -45,7 +45,6 @@ int main(){
 
         read(sock,buff_in,255);
         std::cout<<buff_in<<std::endl;
-
     }
 
 
