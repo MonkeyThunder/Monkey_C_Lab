@@ -9,6 +9,8 @@
 int main(){
 
     int sock, nbyte;
+    char buff_in[255];
+    char buff_out[255];
 
     struct sockaddr_in servaddr;
 
@@ -27,6 +29,27 @@ int main(){
     }
 
     puts("Connection Success !");
+
+    std::cout<<"Txt = ";
+    fgets(buff_out, 255, stdin);
+
+    buff_out[strlen(buff_out)-1]='0';
+    write(sock,buff_out,255);
+
+    if(strncmp(buff_out,"quit", 4)==0){
+        close(sock);
+        std::cout<<"Connection Finished"<<std::endl;
+        exit(0);
+    }
+
+    while(true){
+        read(sock,buff_in,255);
+        if(strncmp(buff_in,"end",3)==0){
+            break;
+        }
+        std::cout<<buff_in<<std::endl;
+    }
+
     close(sock);
 
     return 0;

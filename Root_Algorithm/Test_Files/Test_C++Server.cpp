@@ -13,6 +13,8 @@ int main(){
     int bindfd;
     int accepted_socket;
 
+    char buf[255];
+
     sockfd=socket(PF_INET,SOCK_STREAM,0);
 
     if(sockfd<0){
@@ -44,6 +46,24 @@ int main(){
         }
 
         std::cout<<"Connected Client"<<std::endl;
+
+        while(true){
+            if(read(accepted_socket,buf,255)<=0){
+                std::cout<<"Read Error"<<std::endl;
+                close(accepted_socket);
+                break;
+            }
+
+            if(strncmp(buf, "quit", 4)==0){
+                write(accepted_socket, "Quit Accepted", 14);
+                std::cout<<"Quit Accepted - Server"<<std::endl;
+                close(accepted_socket);
+                break;
+            }
+
+            write(accepted_socket,buf,255);
+            std::cout<<"Send end"<<std::endl;
+        }
     }
 
     close(sockfd);
