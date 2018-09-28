@@ -1,9 +1,10 @@
+#define _0E_SOCKETS
 #include <iostream>
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
-#include <sys/stat.h>
+#include <sys/types.h>
 
 int main(){
 
