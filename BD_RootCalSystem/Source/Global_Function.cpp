@@ -107,9 +107,9 @@ void VOID_Front_Back_XY_RootType(int ForE, int Type,int *INT_X, int *INT_Y) {
 
 }
 
-std::string AStarAlgorithm(int INT_MinDistance, int INT_MaxDistance, int INT_StartX, int INT_StartY, int INT_DestX, int INT_DestY, std::vector<int> Root_Map) {
+std::string AStarAlgorithm(int INT_MinDistance, int INT_MaxDistance, int INT_StartX_in, int INT_StartY_in, int INT_DestX_in, int INT_DestY_in, int Root_Map[29][29]) {
 
-    int INT_SizeOfMap = Root_Map.size();
+    int INT_SizeOfMap = 841;
     int INT_SizeOfMap_withWall;
     if (INT_SizeOfMap == 841) {
         INT_SizeOfMap = 14;
@@ -125,6 +125,10 @@ std::string AStarAlgorithm(int INT_MinDistance, int INT_MaxDistance, int INT_Sta
     //------------------------------
 
     int INT_Buff00, INT_Buff01, INT_Buff02, INT_Buff03, INT_Buff04;
+    int INT_StartX =2*INT_StartX_in+1;
+    int INT_StartY =2*INT_StartY_in+1;
+    int INT_DestX = 2*INT_DestX_in+1;
+    int INT_DestY = 2*INT_DestY_in+1;
     int INT_CurrentX, INT_CurrentY;
     int INT_CurrentDistance;
 
@@ -155,7 +159,7 @@ std::string AStarAlgorithm(int INT_MinDistance, int INT_MaxDistance, int INT_Sta
 
     for (int i0 = 0; i0 < INT_SizeOfMap_withWall; i0++) {
         for (int i1 = 0; i1 < INT_SizeOfMap_withWall; i1++) {
-            INT_Array_BuffRootMap[i0][i1] = Root_Map[i0 * INT_SizeOfMap_withWall + i1];
+            INT_Array_BuffRootMap[i0][i1] = Root_Map[i0][i1];
         }
     }
 
@@ -189,14 +193,16 @@ std::string AStarAlgorithm(int INT_MinDistance, int INT_MaxDistance, int INT_Sta
     INT_Buff04 = INT_CurrentY;
     //------------------------------
 
+    std::cout<<"Destination = ("<<INT_DestX/2<<","<<INT_DestY/2<<")"<<std::endl;
+
     while (true) {
 
-        if (INT_Buff02 > 1000) {
+        if (INT_Buff02 > 50) {
             std::cout << "OverFlow" << std::endl;
-            break;
+            return 0;
         }
 
-        if (INT_CurrentX == INT_DestX && INT_CurrentY == INT_DestY && INT_CurrentDistance >= INT_MinDistance) {
+        if (INT_CurrentX == INT_DestX && INT_CurrentY == INT_DestY && INT_Buff00 >= INT_MinDistance) {
             break;
         }
 
@@ -252,6 +258,7 @@ std::string AStarAlgorithm(int INT_MinDistance, int INT_MaxDistance, int INT_Sta
 
         }
 
+
         INT_Buff01 = 99999999;
 
         //Minimum Weight
@@ -265,6 +272,9 @@ std::string AStarAlgorithm(int INT_MinDistance, int INT_MaxDistance, int INT_Sta
             }
         }
 
+
+        //std::cout<<"("<<INT_Buff03<<","<<INT_Buff04<<") Buff00 => "<<INT_Buff00<<" Buff01 => "<<INT_Buff01<<std::endl;
+
         // Copy Selected Path from OpenNode to ClosedNode and initialize OpenNode
         for (int i0 = 0; i0 < 5; i0++) {
             INT_Array_ClosedNode[INT_Buff03][INT_Buff04][i0] = INT_Array_OpenNode[INT_Buff03][INT_Buff04][i0];
@@ -272,24 +282,27 @@ std::string AStarAlgorithm(int INT_MinDistance, int INT_MaxDistance, int INT_Sta
         }
 
         // Blocking Path which is already passed
+        /*
         if (abs(INT_CurrentX - INT_Buff03) >= 1 || abs(INT_CurrentY - INT_Buff04) >= 1) {
             INT_CurrentX = INT_Array_ClosedNode[INT_Buff03][INT_Buff04][3];
             INT_CurrentY = INT_Array_ClosedNode[INT_Buff03][INT_Buff04][4];
         }
+        */
         if (INT_CurrentX == INT_Buff03) {
             if (INT_CurrentY > INT_Buff04) {
-                INT_Array_BuffRootMap[INT_CurrentX][INT_CurrentY - abs(INT_CurrentY - INT_Buff04) / 2] = 90;
+                INT_Array_BuffRootMap[INT_CurrentX][INT_CurrentY - abs(INT_CurrentY - INT_Buff04)] = 90;
             } else {
-                INT_Array_BuffRootMap[INT_CurrentX][INT_CurrentY + abs(INT_CurrentY - INT_Buff04) / 2] = 80;
+                INT_Array_BuffRootMap[INT_CurrentX][INT_CurrentY + abs(INT_CurrentY - INT_Buff04)] = 80;
             }
         }
         if (INT_CurrentY == INT_Buff04) {
             if (INT_CurrentX > INT_Buff03) {
-                INT_Array_BuffRootMap[INT_CurrentX - abs(INT_CurrentX - INT_Buff03) / 2][INT_CurrentY] = 90;
+                INT_Array_BuffRootMap[INT_CurrentX - abs(INT_CurrentX - INT_Buff03)][INT_CurrentY] = 90;
             } else {
-                INT_Array_BuffRootMap[INT_CurrentX + abs(INT_CurrentX - INT_Buff03) / 2][INT_CurrentY] = 90;
+                INT_Array_BuffRootMap[INT_CurrentX + abs(INT_CurrentX - INT_Buff03)][INT_CurrentY] = 90;
             }
         }
+
 
 
         //Pass data for next loop
@@ -300,8 +313,12 @@ std::string AStarAlgorithm(int INT_MinDistance, int INT_MaxDistance, int INT_Sta
 
         INT_Buff02++;
 
+        std::cout<<"From ("<<INT_Array_ClosedNode[INT_Buff03][INT_Buff04][3]/2<<","<<INT_Array_ClosedNode[INT_Buff03][INT_Buff04][4]/2<<") ->("<<INT_CurrentX/2<<","<<INT_CurrentY/2<<")=> Weight="<<INT_Array_ClosedNode[INT_Buff03][INT_Buff04][2]<<", Distance="<<INT_Distance(INT_CurrentX , INT_CurrentY, INT_DestX, INT_DestY)<<std::endl;
+
+
     }
 
+    std::cout<<"Test ("<<INT_Array_ClosedNode[11][9][3]/2<<","<<INT_Array_ClosedNode[11][9][4]/2<<")"<<std::endl;
     INT_Buff00 = 0;
 
     INT_Buff03 = INT_DestX;
@@ -311,17 +328,24 @@ std::string AStarAlgorithm(int INT_MinDistance, int INT_MaxDistance, int INT_Sta
 
         INT_Buff00++;
 
-        if (INT_Array_ClosedNode[INT_Buff03][INT_Buff04][3] < 10) {
+        if (INT_Array_ClosedNode[INT_Buff03][INT_Buff04][3]/2 < 10) {
             STR_Buff += "0";
         }
-        STR_Buff += std::to_string(INT_Array_ClosedNode[INT_Buff03][INT_Buff04][3]);
-        if (INT_Array_ClosedNode[INT_Buff03][INT_Buff04][4] < 10) {
+        STR_Buff += std::to_string(INT_Array_ClosedNode[INT_Buff03][INT_Buff04][3]/2);
+        if (INT_Array_ClosedNode[INT_Buff03][INT_Buff04][4]/2 < 10) {
             STR_Buff += "0";
         }
-        STR_Buff += std::to_string(INT_Array_ClosedNode[INT_Buff03][INT_Buff04][4]);
+        STR_Buff += std::to_string(INT_Array_ClosedNode[INT_Buff03][INT_Buff04][4]/2);
 
 
         if (INT_Buff03 == INT_StartX && INT_Buff04 == INT_StartY) {
+            break;
+        }
+
+        INT_Buff03=INT_Array_ClosedNode[INT_Buff03][INT_Buff04][3];
+        INT_Buff04=INT_Array_ClosedNode[INT_Buff03][INT_Buff04][4];
+
+        if(INT_Buff00>20){
             break;
         }
 

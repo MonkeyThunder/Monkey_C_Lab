@@ -39,16 +39,20 @@ void Root_Map_14::Set_Flower_14() {
 
 //------------------------------
 
+void Root_Map_14::NumberToArray_14(int INT_Input) {
+    int Buff_Num_X, Buff_Num_Y, Buff_Num_Type;
 
+    Buff_Num_Type=(INT_Input%100);
 
-void Root_Map_14::Path_Initialize(){
-    for(int i0=0;i0<50;i0++){
-        for(int i1=0;i1<50;i1++){
-            Root_Path_Array_14[i0][i1][0]=-1;
-            Root_Path_Array_14[i0][i1][1]=-1;
-        }
-    }
+    Buff_Num_Y=2*((INT_Input%10000-Buff_Num_Type)/100)-1;
 
+    Buff_Num_X=2*(INT_Input/10000)-1;
+
+    Map_Array_14[Buff_Num_X][Buff_Num_Y]=Buff_Num_Type;
+
+    RootTypeToSetWall(Buff_Num_Type,Buff_Num_X,Buff_Num_Y);
+
+    //std::cout<< Buff_Num_X << ", " << Buff_Num_Y << " = " << Buff_Num_Type <<std::endl;
 }
 
 
@@ -178,41 +182,6 @@ void Root_Map_14::Print_Data() {
             }
             std::cout.width(2);
             std::cout<<Map_Array_14[2*i1+1][2*i0+1];
-        }
-        std::cout<<std::endl;
-        if(i0==13){
-            //break;
-        }
-
-    }
-}
-void Root_Map_14::Buff_Print_Data() {
-    std::cout.fill('0');
-    for(int i0=0;i0<15;i0++){
-        for(int i1=0;i1<14;i1++){
-            if(Buff_Map_Array_14[2*i1+1][2*i0]==1){
-                std::cout << "   ||";
-            }
-            else{
-                std::cout << "   --";
-            }
-        }
-        std::cout<<std::endl;
-        if(i0==14){
-            break;
-        }
-        for(int i1=0;i1<15;i1++){
-            if(Buff_Map_Array_14[2*i1][2*i0+1]==1){
-                std::cout << " = ";
-            }
-            else{
-                std::cout << " | ";
-            }
-            if(i1==14){
-                break;
-            }
-            std::cout.width(2);
-            std::cout<<Buff_Map_Array_14[2*i1+1][2*i0+1];
         }
         std::cout<<std::endl;
         if(i0==13){
