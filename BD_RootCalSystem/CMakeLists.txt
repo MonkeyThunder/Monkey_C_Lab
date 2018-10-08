@@ -8,7 +8,7 @@ add_definitions(-DUSE_IMPORT_EXPORT)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(BDRoot_Server Calculating_Server.cpp)
+add_executable(BDRoot_Server Testing.cpp Source/Algorithm_PointToCenter.cpp Source/Class_RootMap.cpp Source/14_Root_Function.cpp Source/Global_Function.cpp)
 
 
 target_link_libraries(BDRoot_Server aws-cpp-sdk-core aws-cpp-sdk-dynamodb -v)
