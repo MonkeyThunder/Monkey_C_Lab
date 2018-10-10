@@ -4,22 +4,31 @@
 
 #include <iostream>
 
-#include "Source/Header/Class_RootMap.h"
-#include "Source/Header/Global_Function.h"
-#include "Source/Header/Algorithm_PointToCenter.h"
-#include "Source/Header/14_Root_Function.h"
+#include "Source/Header/InsertDataToMap.h"
+#include "Source/Header/Find_All_Route.h"
 
 int main(){
+
+    int** INT_Array_RootMap_14 = new int*[29]; //wall-root-wall = 14 * 2 + 1
+    for(int i0=0;i0<29;i0++){
+        INT_Array_RootMap_14[i0] = new int[29];
+    }
+
+    std::string STR_OutData;
+
     int Test_Num_01=50464;
     int Test_Num_02=60499;
 
-    Root_Map_14 TestClass;
+    VOID_DataToMap(INT_Array_RootMap_14,Test_Num_01);
 
-    TestClass.NumberToArray_14(Test_Num_01);
+    STR_OutData = STR_AllRouteOfRoot(INT_Array_RootMap_14);
 
-    TestClass.Print_Data();
+    std::cout<<STR_OutData<<std::endl;
 
-    std::cout<<AStarAlgorithm(5,0,5,4,6,4,TestClass.Map_Array_14);
+    for(int i0=0;i0<29;i0++){
+        delete[] INT_Array_RootMap_14[i0];
+    }
+    delete[] INT_Array_RootMap_14;
 
     return 0;
 }
