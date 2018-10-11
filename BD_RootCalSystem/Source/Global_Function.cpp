@@ -44,43 +44,62 @@ int INT_OneStepRoute(int INT_Integer, int INT_X, int INT_Y, int *INT_Xout, int *
 
     if (BOOL_CheckRouteDirection[INT_Integer][0]) {
 
-        BOOL_CheckRouteDirection[INT_Integer][0] = 0;
+        BOOL_CheckRouteDirection[INT_Integer][0] = false;
 
         *INT_Xout = INT_X;
         *INT_Yout = INT_Y - 2;
+
+        if (INT_Array_RootMap[INT_X][INT_Y - 1] == 0) {
+            BOOL_CheckRouteDirection[INT_Integer + 1][2] = false;
+        }
 
         return INT_Array_RootMap[INT_X][INT_Y - 1];
 
     } else if (BOOL_CheckRouteDirection[INT_Integer][1]) {
 
-        BOOL_CheckRouteDirection[INT_Integer][1] = 0;
+        BOOL_CheckRouteDirection[INT_Integer][1] = false;
 
         *INT_Xout = INT_X + 2;
         *INT_Yout = INT_Y;
+
+        if (INT_Array_RootMap[INT_X + 1][INT_Y] == 0) {
+            BOOL_CheckRouteDirection[INT_Integer + 1][3] = false;
+        }
 
         return INT_Array_RootMap[INT_X + 1][INT_Y];
 
     } else if (BOOL_CheckRouteDirection[INT_Integer][2]) {
 
-        BOOL_CheckRouteDirection[INT_Integer][2] = 0;
+        BOOL_CheckRouteDirection[INT_Integer][2] = false;
 
         *INT_Xout = INT_X;
         *INT_Yout = INT_Y + 2;
+
+        if (INT_Array_RootMap[INT_X][INT_Y + 1] == 0) {
+            BOOL_CheckRouteDirection[INT_Integer + 1][0] = false;
+        }
 
         return INT_Array_RootMap[INT_X][INT_Y + 1];
 
 
     } else if (BOOL_CheckRouteDirection[INT_Integer][3]) {
 
-        BOOL_CheckRouteDirection[INT_Integer][3] = 0;
+        BOOL_CheckRouteDirection[INT_Integer][3] = false;
 
         *INT_Xout = INT_X - 2;
         *INT_Yout = INT_Y;
 
+        if (INT_Array_RootMap[INT_X - 1][INT_Y] == 0) {
+            BOOL_CheckRouteDirection[INT_Integer + 1][1] = false;
+        }
+
         return INT_Array_RootMap[INT_X - 1][INT_Y];
 
     } else {
-        return 9999;
+        std::cout << "Integer = " << INT_Integer << " -> {" << BOOL_CheckRouteDirection[INT_Integer][0] << ","
+                  << BOOL_CheckRouteDirection[INT_Integer][1] << "," << BOOL_CheckRouteDirection[INT_Integer][2] << ","
+                  << BOOL_CheckRouteDirection[INT_Integer][3] << "}" << std::endl;
+        return 99;
     }
 }
 //-return Weight

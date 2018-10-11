@@ -88,3 +88,12 @@ void VOID_DataToMap(int **INT_Array_RootMap,int INT_InputData){
     VOID_RootTypeToSetWall(INT_Type,INT_X,INT_Y,INT_Array_RootMap);
 
 }
+
+void VOID_CertainRouteWall(int INT_X, int INT_Y, int **INT_Array_RootMap){
+
+    INT_Array_RootMap[INT_X+1][INT_Y]=99;
+    INT_Array_RootMap[INT_X-1][INT_Y]=99;
+    INT_Array_RootMap[INT_X][INT_Y+1]=99;
+    INT_Array_RootMap[INT_X][INT_Y-1]=99;
+
+}

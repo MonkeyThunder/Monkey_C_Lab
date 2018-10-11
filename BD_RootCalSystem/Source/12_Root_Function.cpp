@@ -1,10 +1,11 @@
 //
-// Created by DongHoon Kim on 08/10/2018.
+// Created by DongHoon Kim on 11/10/2018.
 //
+
 #include <iostream>
 #include "Header/Global_Function.h"
 
-int INT_MinDistanceByType_14(int Root_Type){
+int INT_MinDistanceByType_12(int Root_Type){
     int Buff_Num;
 
     Buff_Num=Root_Type/10;
@@ -13,13 +14,13 @@ int INT_MinDistanceByType_14(int Root_Type){
             Buff_Num=0;
             break;
         case 5:
-            Buff_Num=7;
+            Buff_Num=5;
             break;
         case 6:
-            Buff_Num=8;
+            Buff_Num=6;
             break;
         case 7:
-            Buff_Num=8;
+            Buff_Num=6;
             break;
         default:
             break;
@@ -27,23 +28,23 @@ int INT_MinDistanceByType_14(int Root_Type){
     return Buff_Num;
 }
 
-int INT_MaxDistanceByType_14(int Root_Type){
+int INT_MaxDistanceByType_12(int Root_Type){
     int Buff_Num;
 
     Buff_Num=Root_Type/10;
 
     switch(Buff_Num){
         case 4:
-            Buff_Num=6;
+            Buff_Num=4;
             break;
         case 5:
-            Buff_Num=7;
+            Buff_Num=5;
             break;
         case 6:
-            Buff_Num=12;
+            Buff_Num=8;
             break;
         case 7:
-            Buff_Num=13;
+            Buff_Num=9;
             break;
         default:
             break;
@@ -51,12 +52,12 @@ int INT_MaxDistanceByType_14(int Root_Type){
     return Buff_Num;
 }
 
-void VOID_RootMapBoundary_14(int **INT_Array_RootMap){
+void VOID_RootMapBoundary_12(int **INT_Array_RootMap){
 
-    for(int i0=0;i0<29;i0++){
-        INT_Array_RootMap[0][i0]=99;
-        INT_Array_RootMap[28][i0]=99;
-        INT_Array_RootMap[i0][0]=99;
-        INT_Array_RootMap[i0][28]=99;
+    for(int i0=0;i0<25;i0++){
+        INT_Array_RootMap[0][i0]=999;
+        INT_Array_RootMap[28][i0]=999;
+        INT_Array_RootMap[i0][0]=999;
+        INT_Array_RootMap[i0][28]=999;
     }
 }

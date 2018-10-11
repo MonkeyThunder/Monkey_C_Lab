@@ -13,3 +13,10 @@
 72 : e, from right
 73 : e, from bottom
 74 : e, from left
+
+
+
+BOOL_CheckRouteDirection[0]-UP
+BOOL_CheckRouteDirection[1]-Right
+BOOL_CheckRouteDirection[2]-Down
+BOOL_CheckRouteDirection[3]-Left
