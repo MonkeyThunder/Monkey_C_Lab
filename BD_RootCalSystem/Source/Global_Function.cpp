@@ -16,6 +16,7 @@ void VOID_CopyRootMap(int **INT_Original, int **INT_Copy) {
 //------------------------------
 
 int INT_Distance(int INT_Start_X, int INT_Start_Y, int INT_Dest_X, int INT_Dest_Y) {
+
     return abs(INT_Start_X-INT_Dest_X)/2+abs(INT_Start_Y-INT_Dest_Y)/2;
 }
 
@@ -29,7 +30,7 @@ int INT_RouteCost(int INT_Start_X, int INT_Start_Y, int INT_Dest_X, int INT_Dest
             return INT_Array_RootMap[INT_Start_X-1][INT_Start_Y];
         }
     }
-    if(INT_Start_Y-INT_Dest_Y){//Y direction Move
+    else if(INT_Start_Y-INT_Dest_Y){//Y direction Move
         if(INT_Start_Y<INT_Dest_Y){
             return INT_Array_RootMap[INT_Start_X][INT_Start_Y+1];
         }
@@ -37,9 +38,12 @@ int INT_RouteCost(int INT_Start_X, int INT_Start_Y, int INT_Dest_X, int INT_Dest
             return INT_Array_RootMap[INT_Start_X][INT_Start_Y-1];
         }
     }
+    else{
+        return 0;
+    }
 }
 
-int INT_OneStepRoute(int INT_Integer, int INT_X, int INT_Y, int *INT_Xout, int *INT_Yout, int **INT_Array_RootMap, bool BOOL_CheckRouteDirection[9][4]) {
+int INT_OneStepRoute(int INT_Integer, int INT_X, int INT_Y, int *INT_Xout, int *INT_Yout, int **INT_Array_RootMap, bool **BOOL_CheckRouteDirection) {
 
 
     if (BOOL_CheckRouteDirection[INT_Integer][0]) {
@@ -187,7 +191,6 @@ void VOID_Center_Location(int Center_INDEX, int *INT_X, int *INT_Y) {
     }
 }
 
-
 void VOID_Front_Back_XY_RootType(int ForE, int Type,int *INT_X, int *INT_Y) {
     int Buff_Num01;
 
@@ -197,16 +200,16 @@ void VOID_Front_Back_XY_RootType(int ForE, int Type,int *INT_X, int *INT_Y) {
     {
         switch(Buff_Num01)
         {
-            case 3:
+            case 1:
                 *INT_Y=*INT_Y-2;
                 break;
-            case 4:
+            case 2:
                 *INT_X=*INT_X+2;
                 break;
-            case 5:
+            case 3:
                 *INT_Y=*INT_Y+2;
                 break;
-            case 6:
+            case 4:
                 *INT_X=*INT_X-2;
                 break;
             default:
@@ -217,6 +220,26 @@ void VOID_Front_Back_XY_RootType(int ForE, int Type,int *INT_X, int *INT_Y) {
     {
         switch(Buff_Num01)
         {
+            case 1:
+                if(ForE==0)
+                {
+                    *INT_Y=*INT_Y-2;
+                }
+                else
+                {
+                    *INT_Y=*INT_Y+2;
+                }
+                break;
+            case 2:
+                if(ForE==0)
+                {
+                    *INT_X=*INT_X-2;
+                }
+                else
+                {
+                    *INT_X=*INT_X+2;
+                }
+                break;
             case 3:
                 if(ForE==0)
                 {
@@ -224,42 +247,22 @@ void VOID_Front_Back_XY_RootType(int ForE, int Type,int *INT_X, int *INT_Y) {
                 }
                 else
                 {
-                    *INT_Y=*INT_Y+2;
+                    *INT_X=*INT_X+2;
                 }
                 break;
             case 4:
                 if(ForE==0)
                 {
-                    *INT_X=*INT_X-2;
+                    *INT_X=*INT_X+2;
                 }
                 else
                 {
-                    *INT_X=*INT_X+2;
+                    *INT_Y=*INT_Y+2;
                 }
                 break;
             case 5:
                 if(ForE==0)
                 {
-                    *INT_Y=*INT_Y-2;
-                }
-                else
-                {
-                    *INT_X=*INT_X+2;
-                }
-                break;
-            case 6:
-                if(ForE==0)
-                {
-                    *INT_X=*INT_X+2;
-                }
-                else
-                {
-                    *INT_Y=*INT_Y+2;
-                }
-                break;
-            case 7:
-                if(ForE==0)
-                {
                     *INT_X=*INT_X-2;
                 }
                 else
@@ -267,7 +270,7 @@ void VOID_Front_Back_XY_RootType(int ForE, int Type,int *INT_X, int *INT_Y) {
                     *INT_Y=*INT_Y+2;
                 }
                 break;
-            case 8:
+            case 6:
                 if(ForE==0)
                 {
                     *INT_Y=*INT_Y-2;
@@ -283,4 +286,44 @@ void VOID_Front_Back_XY_RootType(int ForE, int Type,int *INT_X, int *INT_Y) {
     }
 
 
+}
+
+
+
+int INT_FindPossiblePathPointToPoint(int INT_Start_X, int INT_Start_Y, int INT_Dest_X, int INT_Dest_Y, int INT_MaxDistance, int INT_MinDistance, int **INT_Array_RootMap) {
+
+    int INT_CurrentX, INT_CurrentY;
+    int INT_Xout, INT_Yout;
+
+    bool **BOOL_CheckRouteDirection = new bool *[INT_MaxDistance];
+    for (int i0 = 0; i0 < INT_MaxDistance; i0++) {
+        BOOL_CheckRouteDirection[i0] = new bool[4];
+    }
+
+    //------------------------------
+    //Initialize
+    for (int i1 = 0; i1 < INT_MaxDistance; i1++) {
+        for (int i2 = 0; i2 < 4; i2++) {
+            BOOL_CheckRouteDirection[i1][i2] = true;
+        }
+    }
+    INT_CurrentX = INT_Start_X;
+    INT_CurrentY = INT_Start_Y;
+
+    //------------------------------
+
+    while (true) {
+
+        if (INT_CurrentX == INT_Dest_X && INT_CurrentY == INT_Dest_Y) {
+            break;
+        }
+    }
+
+
+    for (int i0 = 0; i0 < INT_MaxDistance; i0++) {
+        delete[] BOOL_CheckRouteDirection[i0];
+    }
+    delete[] BOOL_CheckRouteDirection;
+
+    return 0;
 }
