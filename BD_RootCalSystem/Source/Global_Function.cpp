@@ -103,7 +103,7 @@ int INT_OneStepRoute(int INT_Integer, int INT_X, int INT_Y, int *INT_Xout, int *
         std::cout << "Integer = " << INT_Integer << " -> {" << BOOL_CheckRouteDirection[INT_Integer][0] << ","
                   << BOOL_CheckRouteDirection[INT_Integer][1] << "," << BOOL_CheckRouteDirection[INT_Integer][2] << ","
                   << BOOL_CheckRouteDirection[INT_Integer][3] << "}" << std::endl;
-        return 99;
+        return 666;
     }
 }
 //-return Weight
@@ -290,10 +290,12 @@ void VOID_Front_Back_XY_RootType(int ForE, int Type,int *INT_X, int *INT_Y) {
 
 
 
-int INT_FindPossiblePathPointToPoint(int INT_Start_X, int INT_Start_Y, int INT_Dest_X, int INT_Dest_Y, int INT_MaxDistance, int INT_MinDistance, int **INT_Array_RootMap) {
+int INT_FindPossiblePathPointToPoint(int INT_Start_X, int INT_Start_Y, int INT_Dest_X, int INT_Dest_Y, int INT_MaxDistance, int INT_MinDistance, int ***INT_ArrayResultOut, int **INT_Array_RootMap) {
 
-    int INT_CurrentX, INT_CurrentY;
+    int INT_CurrentX, INT_CurrentY, INT_CurrentDistance;
     int INT_Xout, INT_Yout;
+    int INT_Weight;
+    int INT_NumberOfPossibleRoute;
 
     bool **BOOL_CheckRouteDirection = new bool *[INT_MaxDistance];
     for (int i0 = 0; i0 < INT_MaxDistance; i0++) {
@@ -310,12 +312,65 @@ int INT_FindPossiblePathPointToPoint(int INT_Start_X, int INT_Start_Y, int INT_D
     INT_CurrentX = INT_Start_X;
     INT_CurrentY = INT_Start_Y;
 
+    INT_CurrentDistance = 0;
+    INT_NumberOfPossibleRoute=1;
+
     //------------------------------
 
     while (true) {
 
-        if (INT_CurrentX == INT_Dest_X && INT_CurrentY == INT_Dest_Y) {
+        INT_ArrayResultOut[INT_NumberOfPossibleRoute-1][INT_CurrentDistance][0]=INT_CurrentX;
+        INT_ArrayResultOut[INT_NumberOfPossibleRoute-1][INT_CurrentDistance][1]=INT_CurrentY;
+
+        if ((INT_CurrentX == INT_Dest_X && INT_CurrentY == INT_Dest_Y)&&INT_CurrentDistance>=INT_MinDistance) {
+            INT_NumberOfPossibleRoute++;
+
+
+            INT_ArrayResultOut[INT_NumberOfPossibleRoute-1][INT_CurrentDistance+1][0]=-1;
+            INT_ArrayResultOut[INT_NumberOfPossibleRoute-1][INT_CurrentDistance+1][1]=-1;
+
+
+            BOOL_CheckRouteDirection[INT_CurrentDistance-1][0] = false;
+            BOOL_CheckRouteDirection[INT_CurrentDistance-1][1] = false;
+            BOOL_CheckRouteDirection[INT_CurrentDistance-1][2] = false;
+            BOOL_CheckRouteDirection[INT_CurrentDistance-1][3] = false;
+
+        }
+
+        //------------------------------
+
+        if(!BOOL_CheckRouteDirection[0][0]&&!BOOL_CheckRouteDirection[0][1]&&!BOOL_CheckRouteDirection[0][2]&&!BOOL_CheckRouteDirection[0][3]){
+
             break;
+        }
+
+        //------------------------------
+
+        INT_Weight = INT_OneStepRoute(INT_CurrentDistance,INT_CurrentX,INT_CurrentY,&INT_Xout,&INT_Yout,INT_Array_RootMap,BOOL_CheckRouteDirection);
+
+        if(INT_Weight==666||INT_Distance(INT_CurrentX,INT_CurrentY,INT_Dest_X,INT_Dest_Y)>INT_MaxDistance){
+            if(INT_CurrentDistance==0){
+                std::cout<<"Wrong Starting Point"<<std::endl;
+                return 0;
+            }
+            INT_CurrentDistance--;
+
+            INT_CurrentX=INT_ArrayResultOut[INT_NumberOfPossibleRoute-1][INT_CurrentDistance][0];
+            INT_CurrentY=INT_ArrayResultOut[INT_NumberOfPossibleRoute-1][INT_CurrentDistance][1];
+
+            BOOL_CheckRouteDirection[INT_CurrentDistance+1][0]=true;
+            BOOL_CheckRouteDirection[INT_CurrentDistance+1][1]=true;
+            BOOL_CheckRouteDirection[INT_CurrentDistance+1][2]=true;
+            BOOL_CheckRouteDirection[INT_CurrentDistance+1][3]=true;
+
+        }
+
+        if(INT_Weight==0){
+            INT_CurrentDistance++;
+
+            INT_CurrentX=INT_Xout;
+            INT_CurrentY=INT_Yout;
+
         }
     }
 
@@ -325,5 +380,5 @@ int INT_FindPossiblePathPointToPoint(int INT_Start_X, int INT_Start_Y, int INT_D
     }
     delete[] BOOL_CheckRouteDirection;
 
-    return 0;
+    return INT_NumberOfPossibleRoute;
 }

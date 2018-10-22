@@ -156,7 +156,7 @@ std::string STR_AllRouteOfRoot(int INT_RootMapSize, int **INT_Array_RootMap) {
                 INT_Buff00=INT_OneStepRoute(INT_RouteLength-1,INT_X,INT_Y,&INT_Xout,&INT_Yout,INT_Array_RootMap_Buff,BOOL_CheckRouteDirection);
 
 
-                if(INT_Buff00==99){
+                if(INT_Buff00==666){
                     INT_RouteLength--;
                     INT_X=INT_Array_Buff00[INT_RouteLength-1][0];
                     INT_Y=INT_Array_Buff00[INT_RouteLength-1][1];
