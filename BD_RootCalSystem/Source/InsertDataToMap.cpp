@@ -79,16 +79,6 @@ void VOID_RootTypeToSetWall(int Type, int INT_X, int INT_Y, int **INT_Array_Root
     }
 }
 
-void VOID_DataToMap(int **INT_Array_RootMap,int INT_InputData){
-
-    int INT_Type, INT_X, INT_Y;
-    VOID_NumberToTypeXY(INT_InputData,&INT_Type,&INT_X,&INT_Y);
-
-
-    VOID_RootTypeToSetWall(INT_Type,INT_X,INT_Y,INT_Array_RootMap);
-
-}
-
 void VOID_CertainRouteWall(int INT_X, int INT_Y, int **INT_Array_RootMap){
 
     INT_Array_RootMap[INT_X+1][INT_Y]=99;
@@ -96,4 +86,14 @@ void VOID_CertainRouteWall(int INT_X, int INT_Y, int **INT_Array_RootMap){
     INT_Array_RootMap[INT_X][INT_Y+1]=99;
     INT_Array_RootMap[INT_X][INT_Y-1]=99;
 
+}
+
+void VOID_DataToMap(int **INT_Array_RootMap,int INT_InputData){
+
+    int INT_Type, INT_X, INT_Y;
+    VOID_NumberToTypeXY(INT_InputData,&INT_Type,&INT_X,&INT_Y);
+
+
+    //VOID_RootTypeToSetWall(INT_Type,INT_X,INT_Y,INT_Array_RootMap);
+    VOID_CertainRouteWall(INT_X,INT_Y,INT_Array_RootMap);
 }
