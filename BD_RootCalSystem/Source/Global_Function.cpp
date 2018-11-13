@@ -553,11 +553,11 @@ bool BOOL_FindIsolatedCellRecursive(int INT_X, int INT_Y, int INT_ComingDirectio
                     (INT_Array_RootMap[INT_X][INT_Y+1]==99||INT_ComingDirection==2)&&
                             (INT_Array_RootMap[INT_X-1][INT_Y]==99||INT_ComingDirection==3)){
         //Isolated
-        std::cout<<"Isolated!! (X,Y) = ("<<INT_X/2<<","<<INT_Y/2<<")"<<std::endl;
+        //std::cout<<"Isolated!! (X,Y) = ("<<INT_X/2<<","<<INT_Y/2<<")"<<std::endl;
         return true;
     }
 
-    std::cout<<"(X,Y) = ("<<INT_X/2<<","<<INT_Y/2<<"), "<<INT_Counter<<", "<<INT_Array_RootMap[27][27]<<std::endl;
+    //std::cout<<"(X,Y) = ("<<INT_X/2<<","<<INT_Y/2<<"), "<<INT_Counter<<", "<<INT_Array_RootMap[27][27]<<std::endl;
 
     if(INT_X<14&&INT_Y<14){
 
@@ -728,60 +728,19 @@ bool BOOL_FindIsolatedCellRecursive(int INT_X, int INT_Y, int INT_ComingDirectio
         return false;
     }
 }
-void VOID_FindIsolatedCell(int INT_StartX, int INT_StartY, int **INT_Array_RootMap){
+void VOID_FindIsolatedCell(int **INT_Array_RootMap){
 
-    int** INT_Array_RootMap_Buff = new int*[29]; //wall-root-wall = 14 * 2 + 1
-    for(int i0=0;i0<29;i0++){
-        INT_Array_RootMap_Buff[i0] = new int[29];
-    }
-
-    for(int i0=0;i0<29;i0++){
-        for(int i1=0;i1<29;i1++){
-            INT_Array_RootMap_Buff[i0][i1]=INT_Array_RootMap[i0][i1];
-        }
-    }
-
-
-
-
-
-    for(int i0=0;i0<29;i0++){
-        delete[] INT_Array_RootMap_Buff[i0];
-    }
-    delete[] INT_Array_RootMap_Buff;
-}
-
-void VOID_IsolatedUnkownCells(int **INT_ArrayResultOut, int INT_MapSize, int **INT_Array_RootMap){
-
-    int INT_StartX, INT_StartY;
-    int INT_EndX, INT_EndY;
-    int INT_DirectionX, INT_DirectionY;
-
-    int INT_CurrentX, INT_CurrentY;
-
-    if(INT_MapSize==12){
-        INT_StartX=3;
-        INT_StartY=3;
-        INT_EndX=25;
-        INT_EndY=25;
-    }
-    else{
-        INT_StartX=1;
-        INT_StartY=1;
-        INT_EndX=27;
-        INT_EndY=27;
-    }
-
-    for(int i0=INT_StartX;i0<INT_EndX+1;i0=i0+2){
-        for(int i1=INT_StartY;i1<INT_EndY+1;i1=i1+2){
-
-            if(INT_Array_RootMap[i0][i1]==99){
-
-                VOID_FindIsolatedCell(i0,i1,INT_Array_RootMap);
-
+    for(int i0=0;i0<13;i0++){
+        for(int i1=0;i1<13;i1++){
+            if(INT_Array_RootMap[2*i0+1][2*i1+1]==0){
+                std::cout<<i0<<","<<i1<<std::endl;
+                if(BOOL_FindIsolatedCellRecursive(2*i0+1,2*i1+1,-1,INT_Array_RootMap)){
+                    INT_Array_RootMap[2*i0+1][2*i1+1]=95;
+                }
+                INT_Array_RootMap[28][28]=0;
             }
-
         }
     }
 }
+
 

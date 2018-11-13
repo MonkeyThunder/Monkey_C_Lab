@@ -20,3 +20,5 @@ BOOL_CheckRouteDirection[0]-UP
 BOOL_CheckRouteDirection[1]-Right
 BOOL_CheckRouteDirection[2]-Down
 BOOL_CheckRouteDirection[3]-Left
+
+95 : 100% Empty

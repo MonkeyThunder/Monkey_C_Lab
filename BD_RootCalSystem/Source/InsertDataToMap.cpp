@@ -88,6 +88,14 @@ void VOID_CertainRouteWall(int INT_X, int INT_Y, int **INT_Array_RootMap){
 
 }
 
+void VOID_SetCenterFlowers(int **INT_Array_RootMap){
+    for(int i0=5;i0<9;i0++){
+        for(int i1=5;i1<9;i1++){
+            INT_Array_RootMap[2*i0+1][2*i1+1]=99;
+        }
+    }
+}
+
 void VOID_DataToMap(int **INT_Array_RootMap,int INT_InputData){
 
     int INT_Type, INT_X, INT_Y;

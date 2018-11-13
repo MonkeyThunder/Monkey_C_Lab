@@ -30,4 +30,4 @@ bool BOOL_FindIsolatedCellRecursive(int INT_X, int INT_Y, int INT_ComingDirectio
 
 void VOID_IsolatedUnkownCells(int **INT_ArrayResultOut, int INT_MapSize, int **INT_Array_RootMap);
 
-void VOID_FindIsolatedCell(int INT_StartX, int INT_StartY, int **INT_Array_RootMap);
+void VOID_FindIsolatedCell(int **INT_Array_RootMap);

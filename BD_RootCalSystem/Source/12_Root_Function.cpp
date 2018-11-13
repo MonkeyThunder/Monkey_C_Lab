@@ -54,10 +54,16 @@ int INT_MaxDistanceByType_12(int Root_Type){
 
 void VOID_RootMapBoundary_12(int **INT_Array_RootMap){
 
-    for(int i0=0;i0<25;i0++){
+    for(int i0=2;i0<27;i0++){
         INT_Array_RootMap[0][i0]=99;
-        INT_Array_RootMap[28][i0]=99;
+        INT_Array_RootMap[26][i0]=99;
         INT_Array_RootMap[i0][0]=99;
-        INT_Array_RootMap[i0][28]=99;
+        INT_Array_RootMap[i0][26]=99;
+    }
+    for(int i0=0;i0<29;i0++){
+        INT_Array_RootMap[i0][1]=99;
+        INT_Array_RootMap[i0][27]=99;
+        INT_Array_RootMap[1][i0]=99;
+        INT_Array_RootMap[27][i0]=99;
     }
 }
