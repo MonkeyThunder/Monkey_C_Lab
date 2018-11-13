@@ -39,14 +39,29 @@ int main(){
 
     std::string STR_OutData;
 
-    int Test_Num_01=50464;
+    int Test_Num_01=50499;
     int Test_Num_02=60499;
 
     VOID_RootMapBoundary_14(INT_Array_RootMap_14);
 
-    VOID_DataToMap(INT_Array_RootMap_14,20299); //<-Real x,y location not 'with wall' number
+    //VOID_DataToMap(INT_Array_RootMap_14,20099); //<-Real x,y location not 'with wall' number
+    //VOID_DataToMap(INT_Array_RootMap_14,10199);
+    //VOID_DataToMap(INT_Array_RootMap_14,10299);
+    //VOID_DataToMap(INT_Array_RootMap_14,399);
 
-    std::cout<<INT_FindPossiblePathPointToPoint(1,1,7,5,INT_MaxDistance,1,INT_ArrayOut,INT_Array_RootMap_14)<<std::endl;
+    VOID_Print_Data(INT_Array_RootMap_14);
+
+    if(BOOL_FindIsolatedCellRecursive(1,1,-1,INT_Array_RootMap_14)){
+        //if(BOOL_VOID_FindIsolatedCellRecursive(1,1,2,INT_Array_RootMap_14)){
+            std::cout<<"Isolated with All Direction"<<std::endl;
+        //}
+    }
+    else{
+        std::cout<<"Is not Isolated"<<std::endl;
+    }
+
+
+    //std::cout<<INT_FindPossiblePathPointToPoint(1,1,7,5,INT_MaxDistance,1,INT_ArrayOut,INT_Array_RootMap_14)<<std::endl;
     /*
 
     //VOID_DataToMap(INT_Array_RootMap_14,Test_Num_01);

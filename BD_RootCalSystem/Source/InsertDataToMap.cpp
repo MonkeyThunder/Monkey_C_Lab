@@ -93,7 +93,8 @@ void VOID_DataToMap(int **INT_Array_RootMap,int INT_InputData){
     int INT_Type, INT_X, INT_Y;
     VOID_NumberToTypeXY(INT_InputData,&INT_Type,&INT_X,&INT_Y);
 
+    INT_Array_RootMap[INT_X][INT_Y]=INT_Type;
 
-    //VOID_RootTypeToSetWall(INT_Type,INT_X,INT_Y,INT_Array_RootMap);
+    VOID_RootTypeToSetWall(INT_Type,INT_X,INT_Y,INT_Array_RootMap);
     VOID_CertainRouteWall(INT_X,INT_Y,INT_Array_RootMap);
 }

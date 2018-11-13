@@ -13,6 +13,42 @@ void VOID_CopyRootMap(int **INT_Original, int **INT_Copy) {
     }
 }
 
+void VOID_Print_Data(int **INT_Array_RootMap) {
+    std::cout.fill('0');
+    for(int i0=0;i0<15;i0++){
+        for(int i1=0;i1<14;i1++){
+            if(INT_Array_RootMap[2*i1+1][2*i0]!=99){
+                std::cout << "   ||";
+            }
+            else{
+                std::cout << "   --";
+            }
+        }
+        std::cout<<std::endl;
+        if(i0==14){
+            break;
+        }
+        for(int i1=0;i1<15;i1++){
+            if(INT_Array_RootMap[2*i1][2*i0+1]!=99){
+                std::cout << " = ";
+            }
+            else{
+                std::cout << " | ";
+            }
+            if(i1==14){
+                break;
+            }
+            std::cout.width(2);
+            std::cout<<INT_Array_RootMap[2*i1+1][2*i0+1];
+        }
+        std::cout<<std::endl;
+        if(i0==13){
+            //break;
+        }
+
+    }
+}
+
 //------------------------------
 
 int INT_Distance(int INT_Start_X, int INT_Start_Y, int INT_Dest_X, int INT_Dest_Y) {
@@ -498,3 +534,254 @@ int INT_FindPossiblePathPointToPoint(int INT_Start_X, int INT_Start_Y, int INT_D
 
     return INT_NumberOfPossibleRoute;
 }
+
+bool BOOL_FindIsolatedCellRecursive(int INT_X, int INT_Y, int INT_ComingDirection, int **INT_Array_RootMap){
+
+    int INT_Next_X, INT_Next_Y;
+    int INT_Counter = 0;
+    if(11<INT_X&&INT_X<17&&11<INT_Y&&INT_Y<17){
+        std::cout<<"Not Isolated!!"<<std::endl;
+        INT_Array_RootMap[28][28]=99999;
+        return false;
+    }
+    if(INT_Array_RootMap[28][28]>=99999){
+        return false;
+    }
+
+    if((INT_Array_RootMap[INT_X][INT_Y-1]==99||INT_ComingDirection==0)&&
+            (INT_Array_RootMap[INT_X+1][INT_Y]==99||INT_ComingDirection==1)&&
+                    (INT_Array_RootMap[INT_X][INT_Y+1]==99||INT_ComingDirection==2)&&
+                            (INT_Array_RootMap[INT_X-1][INT_Y]==99||INT_ComingDirection==3)){
+        //Isolated
+        std::cout<<"Isolated!! (X,Y) = ("<<INT_X/2<<","<<INT_Y/2<<")"<<std::endl;
+        return true;
+    }
+
+    std::cout<<"(X,Y) = ("<<INT_X/2<<","<<INT_Y/2<<"), "<<INT_Counter<<", "<<INT_Array_RootMap[27][27]<<std::endl;
+
+    if(INT_X<14&&INT_Y<14){
+
+        //Right
+        if(INT_Array_RootMap[INT_X+1][INT_Y]!=99&&INT_ComingDirection!=3){
+            INT_Next_X=INT_X+2;
+            INT_Next_Y=INT_Y;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,1,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+
+        //Down
+        if(INT_Array_RootMap[INT_X][INT_Y+1]!=99&&INT_ComingDirection!=0){
+            INT_Next_X=INT_X;
+            INT_Next_Y=INT_Y+2;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,2,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+
+        //Up
+        if(INT_Array_RootMap[INT_X][INT_Y-1]!=99&&INT_ComingDirection!=2){
+            INT_Next_X=INT_X;
+            INT_Next_Y=INT_Y-2;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,0,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+
+        //Left
+        if(INT_Array_RootMap[INT_X-1][INT_Y]!=99&&INT_ComingDirection!=1){
+            INT_Next_X=INT_X-2;
+            INT_Next_Y=INT_Y;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,3,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+    }
+
+
+    if(INT_X>14&&INT_Y<14){
+
+        //Left
+        if(INT_Array_RootMap[INT_X-1][INT_Y]!=99&&INT_ComingDirection!=1){
+            INT_Next_X=INT_X-2;
+            INT_Next_Y=INT_Y;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,3,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+
+        //Down
+        if(INT_Array_RootMap[INT_X][INT_Y+1]!=99&&INT_ComingDirection!=0){
+            INT_Next_X=INT_X;
+            INT_Next_Y=INT_Y+2;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,2,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+
+        //Up
+        if(INT_Array_RootMap[INT_X][INT_Y-1]!=99&&INT_ComingDirection!=2){
+            INT_Next_X=INT_X;
+            INT_Next_Y=INT_Y-2;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,0,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+
+        //Right
+        if(INT_Array_RootMap[INT_X+1][INT_Y]!=99&&INT_ComingDirection!=3){
+            INT_Next_X=INT_X+2;
+            INT_Next_Y=INT_Y;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,1,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+    }
+
+
+    if(INT_X>14&&INT_Y>14){
+
+        //Left
+        if(INT_Array_RootMap[INT_X-1][INT_Y]!=99&&INT_ComingDirection!=1){
+            INT_Next_X=INT_X-2;
+            INT_Next_Y=INT_Y;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,3,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+
+        //Up
+        if(INT_Array_RootMap[INT_X][INT_Y-1]!=99&&INT_ComingDirection!=2){
+            INT_Next_X=INT_X;
+            INT_Next_Y=INT_Y-2;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,0,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+
+        //Right
+        if(INT_Array_RootMap[INT_X+1][INT_Y]!=99&&INT_ComingDirection!=3){
+            INT_Next_X=INT_X+2;
+            INT_Next_Y=INT_Y;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,1,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+
+        //Down
+        if(INT_Array_RootMap[INT_X][INT_Y+1]!=99&&INT_ComingDirection!=0){
+            INT_Next_X=INT_X;
+            INT_Next_Y=INT_Y+2;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,2,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+
+
+
+
+    }
+    if(INT_X<14&&INT_Y>14){
+        //Right
+        if(INT_Array_RootMap[INT_X+1][INT_Y]!=99&&INT_ComingDirection!=3){
+            INT_Next_X=INT_X+2;
+            INT_Next_Y=INT_Y;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,1,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+
+        //Up
+        if(INT_Array_RootMap[INT_X][INT_Y-1]!=99&&INT_ComingDirection!=2){
+            INT_Next_X=INT_X;
+            INT_Next_Y=INT_Y-2;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,0,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+
+        //Down
+        if(INT_Array_RootMap[INT_X][INT_Y+1]!=99&&INT_ComingDirection!=0){
+            INT_Next_X=INT_X;
+            INT_Next_Y=INT_Y+2;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,2,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+
+        //Left
+        if(INT_Array_RootMap[INT_X-1][INT_Y]!=99&&INT_ComingDirection!=1){
+            INT_Next_X=INT_X-2;
+            INT_Next_Y=INT_Y;
+            if(!BOOL_FindIsolatedCellRecursive(INT_Next_X,INT_Next_Y,3,INT_Array_RootMap)){
+                INT_Counter++;
+            }
+        }
+    }
+
+    //Direction 0 - Up, 1 - Right, 2 - Down, 3 - Left
+
+
+    if(INT_Counter==0){
+        return true;
+    }else{
+        return false;
+    }
+}
+void VOID_FindIsolatedCell(int INT_StartX, int INT_StartY, int **INT_Array_RootMap){
+
+    int** INT_Array_RootMap_Buff = new int*[29]; //wall-root-wall = 14 * 2 + 1
+    for(int i0=0;i0<29;i0++){
+        INT_Array_RootMap_Buff[i0] = new int[29];
+    }
+
+    for(int i0=0;i0<29;i0++){
+        for(int i1=0;i1<29;i1++){
+            INT_Array_RootMap_Buff[i0][i1]=INT_Array_RootMap[i0][i1];
+        }
+    }
+
+
+
+
+
+    for(int i0=0;i0<29;i0++){
+        delete[] INT_Array_RootMap_Buff[i0];
+    }
+    delete[] INT_Array_RootMap_Buff;
+}
+
+void VOID_IsolatedUnkownCells(int **INT_ArrayResultOut, int INT_MapSize, int **INT_Array_RootMap){
+
+    int INT_StartX, INT_StartY;
+    int INT_EndX, INT_EndY;
+    int INT_DirectionX, INT_DirectionY;
+
+    int INT_CurrentX, INT_CurrentY;
+
+    if(INT_MapSize==12){
+        INT_StartX=3;
+        INT_StartY=3;
+        INT_EndX=25;
+        INT_EndY=25;
+    }
+    else{
+        INT_StartX=1;
+        INT_StartY=1;
+        INT_EndX=27;
+        INT_EndY=27;
+    }
+
+    for(int i0=INT_StartX;i0<INT_EndX+1;i0=i0+2){
+        for(int i1=INT_StartY;i1<INT_EndY+1;i1=i1+2){
+
+            if(INT_Array_RootMap[i0][i1]==99){
+
+                VOID_FindIsolatedCell(i0,i1,INT_Array_RootMap);
+
+            }
+
+        }
+    }
+}
+
